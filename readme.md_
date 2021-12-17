@@ -1,0 +1,49 @@
+# PlatformService
+
+[![Codeship Status for wherebyus/platformservice](https://app.codeship.com/projects/af023ec0-1600-0138-3b7f-261f6bdc54c0/status?branch=master)](https://app.codeship.com/projects/380871) [![codecov](https://codecov.io/gh/wherebyus/platformservice/branch/master/graph/badge.svg?token=lG0yCmvNFT)](https://codecov.io/gh/wherebyus/platformservice)
+
+**PlatformService** is a Lumen app that facilitates a bunch of features for our service Letterhead. It is largely responsible
+for the management of newsletters, and acts as an API gateway for additional services that handle roles, permissions, users,
+link resolution, pixel tracking, and so on.
+
+## Installation
+
+## Deploy 
+
+### DigitalOcean
+We can deploy PlatformService on DigitalOcean's App Platform. A template "app spec"
+lives in the `.do/` directory. Treat it like a `.env.example`. It's a little more verbose,
+but the principle is the same. Rename the service, and swap `{VALUE}` with the appropriate values in a file named how
+you like. You can then deploy it using DigitalOcean's `doctl` CLI with
+
+```
+doctl apps create --spec path/to/spec
+```
+
+If you have `doctl` installed, your YAML is valid, and you have the appropriate privileges,
+this will deploy PlatformService to the app platform at a new url, which you can retrieve
+from `doctl` or through the browser by logging into DigitalOcean.
+
+### On an Ubuntu server
+#### Scheduled tasks and queues
+PlatformService relies on a variety of scheduled tasks (or cron jobs) and queues to perform
+functions behind the scenes. You'll need to be familiar with Lumen and Laravel. The documentation
+on Queues, Jobs, Tasks, and the like, is really quite good.
+
+##### Supervisor
+In a live environment you'll find that we rely on [Supervisor](http://supervisord.org), which runs in the background
+on an Ubuntu server and manages processes (like queues!) for us. You can find PlatformService's 
+Supervisor configuration file at the root of this repo :) called `lumen-queue-platformservice.conf`. 
+
+1. Place this in `/etc/supervisor/conf.d/`
+2. `supervisorctl reread`
+3. `supervisorctl update`
+4. `supervisorcl restart all`
+
+##### Cron
+Our tasks and recurring jobs are found in `app/console/Kernel.php`. In a live environment, to have the server
+run these you will need to edit your cron `sudo crontab -e` and add
+
+```
+* * * * * cd /path/to/platformservice && php artisan schedule:run >> /dev/null 2>&1
+```

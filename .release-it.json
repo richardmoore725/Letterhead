@@ -1,0 +1,26 @@
+{
+  "github": {
+    "release": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "safeBump": false,
+  "src": {
+    "tagName": "v%s"
+  },
+  "git": {
+    "changelog": "git log --pretty=format:\"* %s (%h)\" ${latestTag}...HEAD",
+    "commitMessage": "chore: release ${version}",
+    "requireCleanWorkingDir": false,
+    "requireBranch": false,
+    "requireUpstream": false,
+    "push": true
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
+  }
+}

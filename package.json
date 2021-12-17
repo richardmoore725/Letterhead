@@ -1,0 +1,46 @@
+{
+  "name": "platformservice",
+  "version": "1.45.0",
+  "description": "A simple platform allowing folks at WhereBy.Us to connect with their communities",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npm run lint"
+    }
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "./vendor/bin/phpcs --standard=psr12 --exclude=Generic.Files.LineLength,PSR1.Methods.CamelCapsMethodName ./app",
+    "lint:fix": "./vendor/bin/phpcbf --standard=psr12 --exclude=Generic.Files.LineLength,PSR1.Methods.CamelCapsMethodName ./app",
+    "positinstall": "husky install",
+    "test": "echo \"Error: not test specified\" && exit 1",
+    "release:major": "release-it major",
+    "release:minor": "release-it minor",
+    "release:patch": "release-it patch",
+    "release:pre": "release-it minor --preRelease=rc",
+    "release:rc": "release-it --preRelease=rc --npm.tag=next"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@release-it/conventional-changelog": "^1.1.1",
+    "codecov": "^3.5.0",
+    "conventional-changelog-cli": "^2.0.23",
+    "husky": "^4.3.0",
+    "release-it": "^12.3.5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

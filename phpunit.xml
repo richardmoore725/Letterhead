@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="bootstrap/app.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
+    <logging>
+        <log type="coverage-html" target="./tests/report" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="./clover.xml" />
+    </logging>
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+            <exclude>
+                <directory>./app/Exceptions</directory>
+                <directory>./app/Console</directory>
+                <directory>./app/Providers</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <env name="APP_DEBUG" value="false"/>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="LOG_ROLLBAR_TOKEN" value="49a438b4c111492395230a6c022b67a4" />
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SERVICE_ARAGORN_URL" value="https://aragorn.local"/>
+        <env name="SERVICE_PASSPORT_URL" value="https://userservice.local"/>
+        <env name="SERVICE_PIXEL_URL" value="https://pixelservice.local/ranger"/>
+        <env name="SERVICE_ADS_ENDPOINT" value="https://adservice.local" />
+        <env name="SERVICE_ADS_KEY" value="wee" />
+        <env name="SERVICE_MJML_ENDPOOINT" value="https://mjml.tryletterhead.com" />
+        <env name="SERVICE_USERS_KEY" value="wee" />
+        <env name="SERVICE_USERS_ENDPOINT" value="https://userservice.local/api/v1" />
+        <env name="SERVICE_PLATFORM_KEY" value="randomServicePlatformKey" />
+        <env name="XDEBUG_MODE" value="coverage" />
+    </php>
+</phpunit>
